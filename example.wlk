@@ -204,7 +204,38 @@ class sucursal {
   var flotaVehiculos = []
   var historialViajesRealizados = []
   
+  method agregarVehiculo(vehiculo) {
+    flotaVehiculos.add(vehiculo)
+  }
+  
+  method quitarVehiculo(vehiculo) {
+    flotaVehiculos.remove(vehiculo)
+  }
+  
   method vehiculosQueCumplenReserva(reserva) = flotaVehiculos.filter(
     { vehiculo => reserva.puedeSerCumplidaPor(vehiculo) }
   )
+  
+  method registrarViaje(reserva, vehiculo) {
+    if (flotaVehiculos.contains(vehiculo) and self.vehiculosQueCumplenReserva(
+        reserva
+      ).contains(vehiculo)) historialViajesRealizados.add([reserva, vehiculo])
+  }
+  
+  method reservasDeVehiculo(vehiculo) = historialViajesRealizados.filter(
+    { viaje => viaje.get(1) == vehiculo }
+  ).map({ viaje => viaje.get(0) })
+  
+  method distanciaTotalRecorridaPorVehiculo(vehiculo) {
+    self.validarQueEsteEnFlota(vehiculo)
+    return historialViajesRealizados.filter(
+      { viaje => viaje.get(1) == vehiculo }
+    ).sum({ viaje => viaje.get(0).distanciaMaxima() })
+  }
+  
+  method validarQueEsteEnFlota(vehiculo) {
+    if (not flotaVehiculos.contains(vehiculo)) self.error(
+        "El vehículo no está en la flota"
+      )
+  }
 }
