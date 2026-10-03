@@ -200,7 +200,7 @@ class Reserva {
   )) and self.cubreNecesidadDeNoRuido(vehiculo)
 }
 
-class sucursal {
+class Sucursal {
   var flotaVehiculos = []
   var historialViajesRealizados = []
   

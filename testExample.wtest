@@ -97,7 +97,7 @@ describe "tests" {
     reserva1.cantidadDePersonas(5)
     reserva1.tiempoMaximo(4)
     reserva1.esRuidoso(false)
-    reserva1.coloresContraindicados(["verde", "fluor"])
+    reserva1.coloresContraindicados("verde", "fluor")
     reserva1.sillaDeRuedas(true)
     reserva1.distanciaMaxima(480)
     
@@ -156,5 +156,51 @@ describe "tests" {
     reserva7.distanciaMaxima(150)
     
     assert.that(!reserva7.puedeSerCumplidaPor(millonario))
+  }
+  
+  test "sucursal villa elisa" {
+    const sucursal = new Sucursal()
+    sucursal.flotaVehiculos().add(combi1)
+    sucursal.flotaVehiculos().add(academia)
+    sucursal.flotaVehiculos().add(reyDeCopas)
+    
+    const reserva = new Reserva()
+    reserva.cantidadDePersonas(4)
+    reserva.tiempoMaximo(4)
+    reserva.distanciaMaxima(30)
+    reserva.coloresContraindicados("rojo")
+    
+    assert.equals(
+      sucursal.vehiculosQueCumplenReserva(reserva),
+      [combi1, academia]
+    )
+    assert.that(!reserva.puedeSerCumplidaPor(reyDeCopas))
+    assert.that(!sucursal.vehiculosQueCumplenReserva(reserva).contains(xeneize))
+    sucursal.registrarViaje(reserva, combi1)
+    assert.that(
+      sucursal.historialDeViajesRealizados().contains([reserva, combi1])
+    )
+    
+    const reserva2 = new Reserva()
+    reserva2.cantidadDePersonas(4)
+    reserva2.tiempoMaximo(4)
+    reserva2.distanciaMaxima(60)
+    reserva2.esRuidoso(false)
+    reserva2.sillaDeRuedas(true)
+    sucursal.registrarViaje(reserva2, combi1)
+    
+    
+    const reserva3 = new Reserva()
+    reserva3.cantidadDePersonas(4)
+    reserva3.tiempoMaximo(4)
+    reserva3.distanciaMaxima(70)
+    reserva3.coloresContraindicados("rojo")
+    sucursal.registrarViaje(reserva3, academia)
+    
+    assert.equals(sucursal.reservasDeVehiculo(combi1), [reserva, reserva2])
+    assert.equals(sucursal.distanciaTotalRecorridaPorVehiculo(combi1), 90)
+    
+    assert.equals(sucursal.reservasDeVehiculo(academia), [reserva3])
+    assert.equals(sucursal.distanciaTotalRecorridaPorVehiculo(academia), 70)
   }
 }
