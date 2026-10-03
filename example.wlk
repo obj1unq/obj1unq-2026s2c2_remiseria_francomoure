@@ -203,4 +203,8 @@ class Reserva {
 class sucursal {
   var flotaVehiculos = []
   var historialViajesRealizados = []
+  
+  method vehiculosQueCumplenReserva(reserva) = flotaVehiculos.filter(
+    { vehiculo => reserva.puedeSerCumplidaPor(vehiculo) }
+  )
 }
