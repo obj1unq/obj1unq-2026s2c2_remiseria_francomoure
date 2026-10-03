@@ -1,9 +1,206 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
-
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "tests" {
+  const reyDeCopas = new Torino()
+  const academia = new Torino()
+  const cuervo = new Economico()
+  const xeneize = new Economico()
+  const millonario = new Economico()
+  const combi1 = new combiAdaptable()
+  const combi2 = new combiAdaptable()
+  
+  method initialize() {
+    reyDeCopas.autonomia(300)
+    reyDeCopas.color("rojo")
+    reyDeCopas.velocidadMaxima(120)
+    
+    academia.color("celeste")
+    academia.autonomia(250)
+    academia.velocidadMaxima(110)
+    
+    cuervo.adaptaciones([transportadorSillaRuedas, tanqueGasolina])
+    xeneize.adaptaciones(cañoEscapeSilencioso)
+    millonario.adaptaciones([])
+    
+    combi1.interior(interiorAccesible)
+    combi1.motor(motorUrbano)
+    
+    combi2.interior(interiorEspacioso)
+    combi2.motor(motorDeportivo)
   }
-
+  
+  test "reyDeCopas" {
+    assert.that(reyDeCopas.color() == "rojo")
+    assert.that(reyDeCopas.autonomia() == 300)
+    assert.that(reyDeCopas.velocidadMaxima() == 120)
+    assert.that(reyDeCopas.capacidad() == 4)
+    assert.that(!reyDeCopas.capacidadParaSillaDeRuedas())
+    assert.that(reyDeCopas.esRuidoso())
+  }
+  
+  test "academia" {
+    assert.that(academia.color() == "celeste")
+    assert.that(academia.autonomia() == 250)
+    assert.that(academia.velocidadMaxima() == 110)
+    assert.that(academia.capacidad() == 4)
+    assert.that(!academia.capacidadParaSillaDeRuedas())
+    assert.that(academia.esRuidoso())
+  }
+  
+  test "cuervo" {
+    assert.that(cuervo.color() == "beige")
+    assert.that(cuervo.autonomia() == 380)
+    assert.that(cuervo.velocidadMaxima() == 80)
+    assert.that(cuervo.capacidad() == 3)
+    assert.that(cuervo.capacidadParaSillaDeRuedas())
+    assert.that(!cuervo.esRuidoso())
+  }
+  
+  test "xeneize" {
+    assert.that(xeneize.color() == "beige")
+    assert.that(xeneize.autonomia() == 190)
+    assert.that(xeneize.velocidadMaxima() == 115)
+    assert.that(xeneize.capacidad() == 5)
+    assert.that(!xeneize.capacidadParaSillaDeRuedas())
+    assert.that(!xeneize.esRuidoso())
+  }
+  
+  test "millonario" {
+    assert.that(millonario.color() == "beige")
+    assert.that(millonario.autonomia() == 200)
+    assert.that(millonario.velocidadMaxima() == 120)
+    assert.that(millonario.capacidad() == 5)
+    assert.that(!millonario.capacidadParaSillaDeRuedas())
+    assert.that(millonario.esRuidoso())
+  }
+  
+  test "combi1" {
+    assert.that(combi1.color() == "celeste")
+    assert.that(combi1.autonomia() == 1000)
+    assert.that(combi1.velocidadMaxima() == 130)
+    assert.that(combi1.capacidad() == 5)
+    assert.that(combi1.capacidadParaSillaDeRuedas())
+    assert.that(!combi1.esRuidoso())
+  }
+  
+  test "combi2" {
+    assert.that(combi1.color() == "celeste")
+    assert.that(combi2.autonomia() == 400)
+    assert.that(combi2.velocidadMaxima() == 230)
+    assert.that(combi2.capacidad() == 7)
+    assert.that(!combi2.capacidadParaSillaDeRuedas())
+    assert.that(combi2.esRuidoso())
+  }
+  
+  test "Reserva exigente cumplida sin inconvenientes" {
+    const reserva1 = new Reserva()
+    reserva1.cantidadDePersonas(5)
+    reserva1.tiempoMaximo(4)
+    reserva1.esRuidoso(false)
+    reserva1.coloresContraindicados("verde", "fluor")
+    reserva1.sillaDeRuedas(true)
+    reserva1.distanciaMaxima(480)
+    
+    assert.that(reserva1.puedeSerCumplidaPor(combi1))
+  }
+  
+  test "Reserva que falla por capacidad insuficiente" {
+    const reserva2 = new Reserva()
+    reserva2.cantidadDePersonas(5)
+    reserva2.tiempoMaximo(2)
+    reserva2.distanciaMaxima(200)
+    
+    assert.that(!reserva2.puedeSerCumplidaPor(reyDeCopas))
+  }
+  
+  test "Reserva que falla por autonomía insuficiente" {
+    const reserva3 = new Reserva()
+    reserva3.cantidadDePersonas(5)
+    reserva3.tiempoMaximo(2)
+    reserva3.distanciaMaxima(195)
+    
+    assert.that(!reserva3.puedeSerCumplidaPor(xeneize))
+  }
+  
+  test "Reserva que falla por velocidad insuficiente" {
+    const reserva4 = new Reserva()
+    reserva4.cantidadDePersonas(5)
+    reserva4.tiempoMaximo(1)
+    reserva4.distanciaMaxima(200)
+    
+    assert.that(!reserva4.puedeSerCumplidaPor(millonario))
+  }
+  
+  test "Reserva que falla por color contraindicado" {
+    const reserva5 = new Reserva()
+    reserva5.cantidadDePersonas(4)
+    reserva5.tiempoMaximo(1.5)
+    reserva5.distanciaMaxima(150)
+    
+    assert.that(!reserva5.puedeSerCumplidaPor(reyDeCopas))
+  }
+  
+  test "Reserva que falla por necesitar transportar silla de ruedas" {
+    const reserva6 = new Reserva()
+    reserva6.cantidadDePersonas(5)
+    reserva6.tiempoMaximo(1.5)
+    reserva6.distanciaMaxima(150)
+    
+    assert.that(!reserva6.puedeSerCumplidaPor(millonario))
+  }
+  
+  test "Reserva que falla por necesitar un vehículo silencioso" {
+    const reserva7 = new Reserva()
+    reserva7.cantidadDePersonas(5)
+    reserva7.tiempoMaximo(1.5)
+    reserva7.distanciaMaxima(150)
+    
+    assert.that(!reserva7.puedeSerCumplidaPor(millonario))
+  }
+  
+  test "sucursal villa elisa" {
+    const sucursal = new Sucursal()
+    sucursal.flotaVehiculos().add(combi1)
+    sucursal.flotaVehiculos().add(academia)
+    sucursal.flotaVehiculos().add(reyDeCopas)
+    
+    const reserva = new Reserva()
+    reserva.cantidadDePersonas(4)
+    reserva.tiempoMaximo(4)
+    reserva.distanciaMaxima(30)
+    reserva.coloresContraindicados("rojo")
+    
+    assert.equals(
+      sucursal.vehiculosQueCumplenReserva(reserva),
+      [combi1, academia]
+    )
+    assert.that(!reserva.puedeSerCumplidaPor(reyDeCopas))
+    assert.that(!sucursal.vehiculosQueCumplenReserva(reserva).contains(xeneize))
+    sucursal.registrarViaje(reserva, combi1)
+    assert.that(
+      sucursal.historialDeViajesRealizados().contains([reserva, combi1])
+    )
+    
+    const reserva2 = new Reserva()
+    reserva2.cantidadDePersonas(4)
+    reserva2.tiempoMaximo(4)
+    reserva2.distanciaMaxima(60)
+    reserva2.esRuidoso(false)
+    reserva2.sillaDeRuedas(true)
+    sucursal.registrarViaje(reserva2, combi1)
+    
+    
+    const reserva3 = new Reserva()
+    reserva3.cantidadDePersonas(4)
+    reserva3.tiempoMaximo(4)
+    reserva3.distanciaMaxima(70)
+    reserva3.coloresContraindicados("rojo")
+    sucursal.registrarViaje(reserva3, academia)
+    
+    assert.equals(sucursal.reservasDeVehiculo(combi1), [reserva, reserva2])
+    assert.equals(sucursal.distanciaTotalRecorridaPorVehiculo(combi1), 90)
+    
+    assert.equals(sucursal.reservasDeVehiculo(academia), [reserva3])
+    assert.equals(sucursal.distanciaTotalRecorridaPorVehiculo(academia), 70)
+  }
 }
