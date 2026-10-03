@@ -1,9 +1,94 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
-
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "tests" {
+  const reyDeCopas = new Torino()
+  const academia = new Torino()
+  const cuervo = new Economico()
+  const xeneize = new Economico()
+  const millonario = new Economico()
+  const combi1 = new combiAdaptable()
+  const combi2 = new combiAdaptable()
+  
+  method initialize() {
+    reyDeCopas.autonomia(300)
+    reyDeCopas.color("rojo")
+    reyDeCopas.velocidadMaxima(120)
+    
+    academia.color("celeste")
+    academia.autonomia(250)
+    academia.velocidadMaxima(110)
+    
+    cuervo.adaptaciones([transportadorSillaRuedas, tanqueGasolina])
+    xeneize.adaptaciones(cañoEscapeSilencioso)
+    millonario.adaptaciones([])
+    
+    combi1.interior(interiorAccesible)
+    combi1.motor(motorUrbano)
+    
+    combi2.interior(interiorEspacioso)
+    combi2.motor(motorDeportivo)
   }
-
+  
+  test "reyDeCopas" {
+    assert.that(reyDeCopas.color() == "rojo")
+    assert.that(reyDeCopas.autonomia() == 300)
+    assert.that(reyDeCopas.velocidadMaxima() == 120)
+    assert.that(reyDeCopas.capacidad() == 4)
+    assert.that(!reyDeCopas.capacidadParaSillaDeRuedas())
+    assert.that(reyDeCopas.esRuidoso())
+  }
+  
+  test "academia" {
+    assert.that(academia.color() == "celeste")
+    assert.that(academia.autonomia() == 250)
+    assert.that(academia.velocidadMaxima() == 120)
+    assert.that(academia.capacidad() == 4)
+    assert.that(!academia.capacidadParaSillaDeRuedas())
+    assert.that(academia.esRuidoso())
+  }
+  
+  test "cuervo" {
+    assert.that(academia.color() == "beige")
+    assert.that(academia.autonomia() == 380)
+    assert.that(academia.velocidadMaxima() == 80)
+    assert.that(academia.capacidad() == 3)
+    assert.that(academia.capacidadParaSillaDeRuedas())
+    assert.that(!academia.esRuidoso())
+  }
+  
+  test "xeneize" {
+    assert.that(academia.color() == "beige")
+    assert.that(academia.autonomia() == 190)
+    assert.that(academia.velocidadMaxima() == 115)
+    assert.that(academia.capacidad() == 5)
+    assert.that(!academia.capacidadParaSillaDeRuedas())
+    assert.that(!academia.esRuidoso())
+  }
+  
+  test "millonario" {
+    assert.that(academia.color() == "beige")
+    assert.that(academia.autonomia() == 200)
+    assert.that(academia.velocidadMaxima() == 120)
+    assert.that(academia.capacidad() == 5)
+    assert.that(!academia.capacidadParaSillaDeRuedas())
+    assert.that(academia.esRuidoso())
+  }
+  
+  test "combi1" {
+    assert.that(combi1.color() == "celeste")
+    assert.that(combi1.autonomia() == 1000)
+    assert.that(combi1.velocidadMaxima() == 130)
+    assert.that(combi1.capacidad() == 5)
+    assert.that(combi1.capacidadParaSillaDeRuedas())
+    assert.that(!combi1.esRuidoso())
+  }
+  
+  test "combi2" {
+    assert.that(combi1.color() == "celeste")
+    assert.that(combi2.autonomia() == 400)
+    assert.that(combi2.velocidadMaxima() == 230)
+    assert.that(combi2.capacidad() == 7)
+    assert.that(!combi2.capacidadParaSillaDeRuedas())
+    assert.that(combi2.esRuidoso())
+  }
 }
