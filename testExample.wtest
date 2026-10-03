@@ -91,4 +91,70 @@ describe "tests" {
     assert.that(!combi2.capacidadParaSillaDeRuedas())
     assert.that(combi2.esRuidoso())
   }
+  
+  test "Reserva exigente cumplida sin inconvenientes" {
+    const reserva1 = new Reserva()
+    reserva1.cantidadDePersonas(5)
+    reserva1.tiempoMaximo(4)
+    reserva1.esRuidoso(false)
+    reserva1.coloresContraindicados(["verde", "fluor"])
+    reserva1.sillaDeRuedas(true)
+    reserva1.distanciaMaxima(480)
+    
+    assert.that(reserva1.puedeSerCumplidaPor(combi1))
+  }
+  
+  test "Reserva que falla por capacidad insuficiente" {
+    const reserva2 = new Reserva()
+    reserva2.cantidadDePersonas(5)
+    reserva2.tiempoMaximo(2)
+    reserva2.distanciaMaxima(200)
+    
+    assert.that(!reserva2.puedeSerCumplidaPor(reyDeCopas))
+  }
+  
+  test "Reserva que falla por autonomía insuficiente" {
+    const reserva3 = new Reserva()
+    reserva3.cantidadDePersonas(5)
+    reserva3.tiempoMaximo(2)
+    reserva3.distanciaMaxima(195)
+    
+    assert.that(!reserva3.puedeSerCumplidaPor(xeneize))
+  }
+  
+  test "Reserva que falla por velocidad insuficiente" {
+    const reserva4 = new Reserva()
+    reserva4.cantidadDePersonas(5)
+    reserva4.tiempoMaximo(1)
+    reserva4.distanciaMaxima(200)
+    
+    assert.that(!reserva4.puedeSerCumplidoPor(millonario))
+  }
+  
+  test "Reserva que falla por color contraindicado" {
+    const reserva5 = new Reserva()
+    reserva5.cantidadDePersonas(4)
+    reserva5.tiempoMaximo(1.5)
+    reserva5.distanciaMaxima(150)
+    
+    assert.that(!reserva5.puedeSerCumplidoPor(reyDeCopas))
+  }
+  
+  test "Reserva que falla por necesitar transportar silla de ruedas" {
+    const reserva6 = new Reserva()
+    reserva6.cantidadDePersonas(5)
+    reserva6.tiempoMaximo(1.5)
+    reserva6.distanciaMaxima(150)
+    
+    assert.that(!reserva6.puedeSerCumplidoPor(millonario))
+  }
+  
+  test "Reserva que falla por necesitar un vehículo silencioso" {
+    const reserva7 = new Reserva()
+    reserva7.cantidadDePersonas(5)
+    reserva7.tiempoMaximo(1.5)
+    reserva7.distanciaMaxima(150)
+    
+    assert.that(!reserva7.puedeSerCumplidoPor(millonario))
+  }
 }
