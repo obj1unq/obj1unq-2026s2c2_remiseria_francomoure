@@ -41,37 +41,37 @@ describe "tests" {
   test "academia" {
     assert.that(academia.color() == "celeste")
     assert.that(academia.autonomia() == 250)
-    assert.that(academia.velocidadMaxima() == 120)
+    assert.that(academia.velocidadMaxima() == 110)
     assert.that(academia.capacidad() == 4)
     assert.that(!academia.capacidadParaSillaDeRuedas())
     assert.that(academia.esRuidoso())
   }
   
   test "cuervo" {
-    assert.that(academia.color() == "beige")
-    assert.that(academia.autonomia() == 380)
-    assert.that(academia.velocidadMaxima() == 80)
-    assert.that(academia.capacidad() == 3)
-    assert.that(academia.capacidadParaSillaDeRuedas())
-    assert.that(!academia.esRuidoso())
+    assert.that(cuervo.color() == "beige")
+    assert.that(cuervo.autonomia() == 380)
+    assert.that(cuervo.velocidadMaxima() == 80)
+    assert.that(cuervo.capacidad() == 3)
+    assert.that(cuervo.capacidadParaSillaDeRuedas())
+    assert.that(!cuervo.esRuidoso())
   }
   
   test "xeneize" {
-    assert.that(academia.color() == "beige")
-    assert.that(academia.autonomia() == 190)
-    assert.that(academia.velocidadMaxima() == 115)
-    assert.that(academia.capacidad() == 5)
-    assert.that(!academia.capacidadParaSillaDeRuedas())
-    assert.that(!academia.esRuidoso())
+    assert.that(xeneize.color() == "beige")
+    assert.that(xeneize.autonomia() == 190)
+    assert.that(xeneize.velocidadMaxima() == 115)
+    assert.that(xeneize.capacidad() == 5)
+    assert.that(!xeneize.capacidadParaSillaDeRuedas())
+    assert.that(!xeneize.esRuidoso())
   }
   
   test "millonario" {
-    assert.that(academia.color() == "beige")
-    assert.that(academia.autonomia() == 200)
-    assert.that(academia.velocidadMaxima() == 120)
-    assert.that(academia.capacidad() == 5)
-    assert.that(!academia.capacidadParaSillaDeRuedas())
-    assert.that(academia.esRuidoso())
+    assert.that(millonario.color() == "beige")
+    assert.that(millonario.autonomia() == 200)
+    assert.that(millonario.velocidadMaxima() == 120)
+    assert.that(millonario.capacidad() == 5)
+    assert.that(!millonario.capacidadParaSillaDeRuedas())
+    assert.that(millonario.esRuidoso())
   }
   
   test "combi1" {
@@ -128,7 +128,7 @@ describe "tests" {
     reserva4.tiempoMaximo(1)
     reserva4.distanciaMaxima(200)
     
-    assert.that(!reserva4.puedeSerCumplidoPor(millonario))
+    assert.that(!reserva4.puedeSerCumplidaPor(millonario))
   }
   
   test "Reserva que falla por color contraindicado" {
@@ -137,7 +137,7 @@ describe "tests" {
     reserva5.tiempoMaximo(1.5)
     reserva5.distanciaMaxima(150)
     
-    assert.that(!reserva5.puedeSerCumplidoPor(reyDeCopas))
+    assert.that(!reserva5.puedeSerCumplidaPor(reyDeCopas))
   }
   
   test "Reserva que falla por necesitar transportar silla de ruedas" {
@@ -146,7 +146,7 @@ describe "tests" {
     reserva6.tiempoMaximo(1.5)
     reserva6.distanciaMaxima(150)
     
-    assert.that(!reserva6.puedeSerCumplidoPor(millonario))
+    assert.that(!reserva6.puedeSerCumplidaPor(millonario))
   }
   
   test "Reserva que falla por necesitar un vehículo silencioso" {
@@ -155,6 +155,6 @@ describe "tests" {
     reserva7.tiempoMaximo(1.5)
     reserva7.distanciaMaxima(150)
     
-    assert.that(!reserva7.puedeSerCumplidoPor(millonario))
+    assert.that(!reserva7.puedeSerCumplidaPor(millonario))
   }
 }
